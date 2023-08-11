@@ -27,6 +27,26 @@ public class Employee {
         return employeeAge;
     }
 
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setEmployeeAge(int employeeAge) {
+        this.employeeAge = employeeAge;
+    }
+
     public Employee(String fullName,
                     String jobTitle,
                     String email,
