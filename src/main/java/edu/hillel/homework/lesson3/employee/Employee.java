@@ -51,6 +51,6 @@ public class Employee {
     }
 
     private void partingWord() {
-        System.out.println("Success in your career! (This text was received from private method from Employee class)");
+        System.out.println("Success in your career! (This text was received from private partingWord() method from Employee class)");
     }
 }
