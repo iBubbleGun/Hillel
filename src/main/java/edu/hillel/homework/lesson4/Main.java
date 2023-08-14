@@ -8,7 +8,7 @@ public class Main {
         System.out.println("Dog name: " + dog1.getName());
         dog1.run(15);
         System.out.println("Cat name: " + cat.getName());
-        cat.run(250);
+        cat.run(25);
 
         System.out.println("Cats: " + Cat.getTotalCatsCount());
         System.out.println("Dogs: " + Dog.getTotalDogsCount());
