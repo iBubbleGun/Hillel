@@ -13,10 +13,6 @@ public class Dog extends Animals {
         return totalDogsCount;
     }
 
-    public String getDogName() {
-        return super.getAnimalName();
-    }
-
     @Override
     public void run(int distance) {
         //

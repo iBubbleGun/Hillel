@@ -13,15 +13,12 @@ public class Cat extends Animals {
         return totalCatsCount;
     }
 
-    public String getCatName() {
-        return super.getAnimalName();
-    }
-
     @Override
     public void run(int distance) {
         if (distance > 200) {
             System.out.println("Котик не може пробігти більше 200 метрів!");
             return;
         }
+        System.out.println("Котик пробіг " + distance + " метрів.");
     }
 }

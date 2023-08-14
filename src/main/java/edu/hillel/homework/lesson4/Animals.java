@@ -3,9 +3,10 @@ package edu.hillel.homework.lesson4;
 public class Animals {
 
     private static int totalAnimalsCount = 0;
-    private String animalName;
+    private String name;
 
-    public Animals(String animalName) {
+    public Animals(String name) {
+        this.name = name;
         totalAnimalsCount++;
     }
 
@@ -13,8 +14,8 @@ public class Animals {
         return totalAnimalsCount;
     }
 
-    public String getAnimalName() {
-        return animalName;
+    public String getName() {
+        return name;
     }
 
     public void run(int distance) {
