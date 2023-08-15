@@ -1,4 +1,6 @@
-package edu.hillel.homework.lesson4;
+package edu.hillel.homework.lesson4.cats;
+
+import edu.hillel.homework.lesson4.Animals;
 
 public class Cat extends Animals {
 

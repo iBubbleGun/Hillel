@@ -1,5 +1,8 @@
 package edu.hillel.homework.lesson4;
 
+import edu.hillel.homework.lesson4.cats.Cat;
+import edu.hillel.homework.lesson4.dogs.Dog;
+
 public class Main {
     public static void main(String[] args) {
         Animals dog1 = new Dog("Barbos");
