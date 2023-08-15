@@ -19,6 +19,10 @@ public class Animals {
     }
 
     public void run(int distance) {
-        //
+        System.out.println("The animal " + getName() + " ran " + distance + " meters.");
+    }
+
+    public void swim(int distance) {
+        System.out.println("The animal " + getName() + " swam " + distance + " meters.");
     }
 }
