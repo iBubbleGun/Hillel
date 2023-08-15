@@ -32,4 +32,8 @@ public class Dog extends Animals {
         }
         System.out.println("The dog " + super.getName() + " swam " + distance + " meters.");
     }
+
+    public void sayWuf() {
+        System.out.println("The dog " + super.getName() + " say's wuf-wuf!");
+    }
 }

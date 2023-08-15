@@ -27,4 +27,8 @@ public class Cat extends Animals {
     public void swim(int distance) {
         System.out.println("I'm sorry, but cats can't swim. So, " + super.getName() + " can't swim any distance.");
     }
+
+    public void sayMeow() {
+        System.out.println("The cat " + super.getName() + " say's meow.");
+    }
 }

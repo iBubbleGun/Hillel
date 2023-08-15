@@ -24,6 +24,9 @@ public class Main {
         dog3.swim(10);
         dog4.swim(15);
 
+        ((Dog) dog1).sayWuf();
+        ((Dog) dog3).sayWuf();
+
         System.out.println();
 
         cat1.run(100);
@@ -34,6 +37,9 @@ public class Main {
 
         cat1.swim(2);
         cat2.swim(10);
+
+        ((Cat) cat1).sayMeow();
+        ((Cat) cat4).sayMeow();
 
         System.out.println();
         System.out.println("Totally we have " + Cat.getTotalCatsCount() + " cats.");
