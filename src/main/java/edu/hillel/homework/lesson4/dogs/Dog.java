@@ -1,20 +1,16 @@
 package edu.hillel.homework.lesson4.dogs;
 
 import edu.hillel.homework.lesson4.Animals;
+import edu.hillel.homework.lesson4.Counter;
 
 public class Dog extends Animals {
 
     private static final int DOG_MAX_RUN_DISTANCE = 500;
     private static final int DOG_MAX_SWIM_DISTANCE = 10;
-    private static int totalDogsCount = 0;
 
-    public Dog(String dogName) {
+    public Dog(String dogName, Counter counter) {
         super(dogName);
-        totalDogsCount++;
-    }
-
-    public static int getTotalDogsCount() {
-        return totalDogsCount;
+        counter.incrementCounter(this);
     }
 
     @Override
