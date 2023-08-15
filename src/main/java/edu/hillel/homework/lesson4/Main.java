@@ -7,7 +7,6 @@ public class Main {
         Animals dog3 = new Dog("Chakkie");
         Animals dog4 = new Dog("Black");
 
-
         Animals cat1 = new Cat("Fluffy");
         Animals cat2 = new Cat("Tosha");
         Animals cat3 = new Cat("Kote");
