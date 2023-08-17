@@ -5,16 +5,18 @@ import edu.hillel.homework.lesson4.dogs.Dog;
 
 public class Main {
     public static void main(String[] args) {
-        Animals dog1 = new Dog("Barbos");
-        Animals dog2 = new Dog("Frank");
-        Animals dog3 = new Dog("Chakkie");
-        Animals dog4 = new Dog("Black");
+        Counter counter = new AnimalCounter();
 
-        Animals cat1 = new Cat("Fluffy");
-        Animals cat2 = new Cat("Tosha");
-        Animals cat3 = new Cat("Kote");
-        Animals cat4 = new Cat("Asya");
-        Animals cat5 = new Cat("Sima");
+        Animals dog1 = new Dog("Barbos", counter);
+        Animals dog2 = new Dog("Frank", counter);
+        Animals dog3 = new Dog("Chakkie", counter);
+        Animals dog4 = new Dog("Black", counter);
+
+        Animals cat1 = new Cat("Fluffy", counter);
+        Animals cat2 = new Cat("Tosha", counter);
+        Animals cat3 = new Cat("Kote", counter);
+        Animals cat4 = new Cat("Asya", counter);
+        Animals cat5 = new Cat("Sima", counter);
 
         dog1.run(15);
         dog2.run(150);
@@ -44,8 +46,8 @@ public class Main {
         ((Cat) cat4).sayMeow();
 
         System.out.println();
-        System.out.println("Totally we have " + Cat.getTotalCatsCount() + " cats.");
-        System.out.println("Totally we have " + Dog.getTotalDogsCount() + " dogs.");
-        System.out.println("Totally we have " + Animals.getTotalAnimalsCount() + " animals.");
+        System.out.println("Totally we have " + counter.getTotalCatsCount() + " cats.");
+        System.out.println("Totally we have " + counter.getTotalDogsCount() + " dogs.");
+        System.out.println("Totally we have " + counter.getTotalAnimalsCount() + " animals.");
     }
 }

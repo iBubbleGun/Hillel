@@ -1,25 +1,21 @@
 package edu.hillel.homework.lesson4.cats;
 
 import edu.hillel.homework.lesson4.Animals;
+import edu.hillel.homework.lesson4.Counter;
 
 public class Cat extends Animals {
 
     private static final int CAT_MAX_RUN_DISTANCE = 200;
-    private static int totalCatsCount = 0;
 
-    public Cat(String catName) {
+    public Cat(String catName, Counter counter) {
         super(catName);
-        totalCatsCount++;
-    }
-
-    public static int getTotalCatsCount() {
-        return totalCatsCount;
+        counter.incrementCounter(this);
     }
 
     @Override
     public void run(int distance) {
         if (distance > CAT_MAX_RUN_DISTANCE) {
-            System.out.println("I'm sorry, but cats can't run more than " + CAT_MAX_RUN_DISTANCE + " meters! " + super.getName() + " can't run " + distance + " meters!");
+            System.out.println("I'm sorry, but cats can't run more than " + CAT_MAX_RUN_DISTANCE + " meters! So, " + super.getName() + " can't run " + distance + " meters!");
             return;
         }
         System.out.println("The cat " + super.getName() + " ran " + distance + " meters.");
