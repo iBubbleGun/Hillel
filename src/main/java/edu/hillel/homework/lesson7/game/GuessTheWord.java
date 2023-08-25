@@ -1,105 +1,38 @@
 package edu.hillel.homework.lesson7.game;
 
-import java.util.Random;
-import java.util.Scanner;
+import edu.hillel.homework.lesson7.game.methods.AdditionalLogic;
 
-public class GuessTheWord {
+public class GuessTheWord extends AdditionalLogic {
 
-    private final String[] WORDS;
-    private final Scanner sc;
-    private final Random rnd;
-    private final String HIDDEN_WORD;
-    private final int HIDDEN_LETTERS_FIELD_LENGTH;
+    private String wordGameField;
 
     public GuessTheWord() {
-        this.WORDS = new String[]{
-                "apple",
-                "orange",
-                "lemon",
-                "banana",
-                "apricot",
-                "avocado",
-                "broccoli",
-                "carrot",
-                "cherry",
-                "garlic",
-                "grape",
-                "melon",
-                "leak",
-                "kiwi",
-                "mango",
-                "mushroom",
-                "nut",
-                "olive",
-                "pea",
-                "peanut",
-                "pear",
-                "pepper",
-                "pineapple",
-                "pumpkin",
-                "potato"
-        };
-        this.sc = new Scanner(System.in);
-        this.rnd = new Random();
-        this.HIDDEN_WORD = WORDS[rnd.nextInt(WORDS.length - 1)];
-        this.HIDDEN_LETTERS_FIELD_LENGTH = 14;
+        this.wordGameField = HIDDEN_SYMBOL.repeat(HIDDEN_SYMBOL_FIELD_LENGTH);
     }
 
     public GuessTheWord(String[] wordsArray) {
-        this.WORDS = wordsArray;
-        this.sc = new Scanner(System.in);
-        this.rnd = new Random();
-        this.HIDDEN_WORD = WORDS[rnd.nextInt(WORDS.length - 1)];
-        this.HIDDEN_LETTERS_FIELD_LENGTH = 14;
+        super(wordsArray);
+        this.wordGameField = HIDDEN_SYMBOL.repeat(HIDDEN_SYMBOL_FIELD_LENGTH);
     }
 
     public void start() {
-
-        String wordInGameField = "#".repeat(HIDDEN_LETTERS_FIELD_LENGTH);
-        String answer;
-        gameField(wordInGameField, "Guess the hidden word!\nWrite your own version of the word: ");
-
+        gameField(wordGameField, startMessage());
         while (true) {
+            String userAnswer;
             while (true) {
-                answer = sc.nextLine();
-                if (isWordsArrayContainWord(WORDS, answer)) {
+                userAnswer = sc.nextLine();
+                if (isWordsArrayContainWord(WORDS, userAnswer)) {
                     break;
                 }
-                gameField(wordInGameField, "This word does not exist in the list!\nWrite your own version of the word: ");
+                gameField(wordGameField, wordDoesNotExist());
             }
-            if (answer.equals(HIDDEN_WORD)) {
-                gameField(HIDDEN_WORD.concat(" ".repeat(HIDDEN_LETTERS_FIELD_LENGTH - HIDDEN_WORD.length())),"You win!");
+            wordGameField = letterOpener(wordGameField, userAnswer);
+            if (userAnswer.equals(HIDDEN_WORD) || isWordOpened) {
+                gameField(clearHiddenWordField(), guessedTheWord());
                 break;
             }
-            // wordInGameField = letterOpener(answer); // here
-            gameField(wordInGameField,"You wrong!\nWrite your another version of the word: ");
+            gameField(wordGameField, (isLetterGuessed) ? wrongWordHot() : wrongWordCold());
+            this.isLetterGuessed = false;
         }
-    }
-
-    private void gameField(String str, String msg) {
-        System.out.println();
-        System.out.println(HIDDEN_WORD);
-        System.out.println("+--------------------------------------------------+");
-        System.out.println("|                  Guess The Word                  |");
-        System.out.println("+--------------------------------------------------+");
-        System.out.println("|                                                  |");
-        System.out.println("|                  " + str + "                  |");
-        System.out.println("|                                                  |");
-        System.out.println("+--------------------------------------------------+");
-        System.out.print(msg);
-    }
-
-    private String letterOpener(String str) {
-        // not complete yet
-        return str;
-    }
-
-    private boolean isWordsArrayContainWord(String[] wordsArray, String word) {
-        for (String s : wordsArray) {
-            if (s.equals(word)) {
-                return true;
-            }
-        }
-        return false;
     }
 }
