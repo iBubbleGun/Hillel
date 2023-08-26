@@ -45,7 +45,7 @@ public class InitialSetup {
 
         this.sc = new Scanner(System.in);
         this.rnd = new Random();
-        this.HIDDEN_WORD = WORDS[rnd.nextInt(WORDS.length - 1)];
+        this.HIDDEN_WORD = WORDS[rnd.nextInt(WORDS.length)];
         this.isLetterGuessed = false;
         this.isWordOpened = false;
     }
@@ -54,7 +54,7 @@ public class InitialSetup {
         this.WORDS = wordsArray;
         this.sc = new Scanner(System.in);
         this.rnd = new Random();
-        this.HIDDEN_WORD = WORDS[rnd.nextInt(WORDS.length - 1)];
+        this.HIDDEN_WORD = WORDS[rnd.nextInt(WORDS.length)];
         this.isLetterGuessed = false;
         this.isWordOpened = false;
     }
