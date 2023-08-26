@@ -13,15 +13,7 @@ public class StringMethodsUse {
     }
 
     public int findWordPosition(String source, String target) {
-        int result = -1;
-        if (source.contains(target)) {
-            for (int i = 0; i < source.length(); i++) {
-                if (target.charAt(0) == source.charAt(i)) {
-                    result = i;
-                }
-            }
-        }
-        return result;
+        return source.indexOf(target);
     }
 
     public String stringReverse(String str) {
