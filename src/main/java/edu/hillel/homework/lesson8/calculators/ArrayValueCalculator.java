@@ -38,7 +38,7 @@ public class ArrayValueCalculator {
                         throw new ArrayDataException("An error occured!\n" +
                                 "Array element \"" + inputArray[i][j] + "\" " +
                                 "with index [" + i + "][" + j + "]" +
-                                " cannot be converted to a number because it's not a number!");
+                                " cannot be converted to a number because it's not a number!", e.fillInStackTrace());
                     }
                 }
             }

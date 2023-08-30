@@ -46,8 +46,11 @@ public class Main {
             try {
                 int result = avc.doCalc((String[][]) testArraysArray[i]);
                 System.out.println("Result = " + result + ".");
-            } catch (ArrayDataException | ArraySizeException | ArrayEmptyException | ArrayElementEmptyException e) {
+            } catch (ArraySizeException | ArrayEmptyException | ArrayElementEmptyException e) {
                 System.out.println(e.getMessage());
+            } catch (ArrayDataException e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
             }
             System.out.println();
         }
