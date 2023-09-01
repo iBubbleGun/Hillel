@@ -1,6 +1,6 @@
 package edu.hillel.homework.lesson9.warehouse;
 
-public class Fruit<T extends Fruit> {
+public class Fruit {
 
     private float weight;
 

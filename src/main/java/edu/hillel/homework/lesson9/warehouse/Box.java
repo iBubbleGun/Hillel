@@ -1,10 +1,12 @@
 package edu.hillel.homework.lesson9.warehouse;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Box<T extends Fruit<T>> {
+public class Box<T extends Fruit> {
 
     private final List<T> fruits;
 
@@ -27,11 +29,23 @@ public class Box<T extends Fruit<T>> {
         return this.fruits.get(0).getWeight() * this.fruits.size();
     }
 
-    public boolean compare(Box<?> otherBox) {
+    public int getFruitsQuantity() {
+        return this.fruits.size();
+    }
+
+    public String getFruitsType() {
+        try {
+            return this.fruits.get(0).getClass().getSimpleName().toLowerCase();
+        } catch (Exception e) {
+            throw new RuntimeException("Can't tell which fruit is in the box because it's empty!", e);
+        }
+    }
+
+    public boolean compare(@NotNull Box<?> otherBox) {
         return this.getWeight() == otherBox.getWeight();
     }
 
-    public void merge(Box<T> otherBox) {
+    public void merge(@NotNull Box<T> otherBox) {
         if (!otherBox.fruits.isEmpty()) {
             int firstBoxQuantity = this.fruits.size();
             int otherBoxQuantity = otherBox.fruits.size();
@@ -41,7 +55,7 @@ public class Box<T extends Fruit<T>> {
 
             System.out.println("Successfully merged new "
                     + otherBoxQuantity + " with " + firstBoxQuantity + " old "
-                    + this.fruits.get(0).getClass().getSimpleName().toLowerCase().concat("s."));
+                    + this.getFruitsType().concat("s."));
         } else {
             System.out.println("Your other box is empty!\n" +
                     "Nothing to merge.");

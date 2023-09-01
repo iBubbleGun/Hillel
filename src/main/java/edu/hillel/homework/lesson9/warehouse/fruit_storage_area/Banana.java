@@ -2,10 +2,10 @@ package edu.hillel.homework.lesson9.warehouse.fruit_storage_area;
 
 import edu.hillel.homework.lesson9.warehouse.Fruit;
 
-public class Banana extends Fruit<Banana> {
+public class Banana extends Fruit {
 
     public Banana() {
-        float weight = 2.0f;
+        final float weight = 2.0f;
         super.setWeight(weight);
     }
 }
