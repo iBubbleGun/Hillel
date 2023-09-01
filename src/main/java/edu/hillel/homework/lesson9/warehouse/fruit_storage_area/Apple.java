@@ -4,8 +4,9 @@ import edu.hillel.homework.lesson9.warehouse.Fruit;
 
 public class Apple extends Fruit {
 
+    private static final float ONE_APPLE_WEIGHT = 1.0f;
+
     public Apple() {
-        final float weight = 1.0f;
-        super.setWeight(weight);
+        super.setWeight(ONE_APPLE_WEIGHT);
     }
 }
