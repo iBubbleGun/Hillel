@@ -18,7 +18,11 @@
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>24.0.1</version>
-            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>edu.hillel.library</groupId>
+            <artifactId>AESGCM256Cipher</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 
