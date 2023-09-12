@@ -74,7 +74,7 @@ public class Main {
         listMethods.delimiter(6);
         Phonebook phonebook = new Phonebook();
         phonebook.add(new Record("Tymur", "+38(044)9379992"));
-        phonebook.add(new Record("Tymur", "+38(044)9379992"));
+        phonebook.add(new Record("Tymur", "+38(044)9379992")); // the entry already exists, so it will not be added
         phonebook.add(new Record("Tymur", "+38(066)1234567"));
         phonebook.add(new Record("SomeName", "+38(050)3434567"));
         //phonebook.add(new Record("Name", "45379992")); // Example with invalid pone number format - throw InvalidPhoneNumberFormatException
