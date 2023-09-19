@@ -36,16 +36,16 @@ public class FileNavigator {
         final String filePath = fileData.getFilePath();
         final String fileName = fileData.getFileName();
         if (path.equals(filePath)) {
-            if (!isFileAlreadyExist(fileData)) {
-                if (!isFilePathAlreadyExist(filePath)) {
-                    fileStorage.put(filePath, new ArrayList<>());
+            if (fileStorage.containsKey(path)) {
+                if (isTheSameFileNameExist(fileData)) {
+                    throw new FileAlreadyExistsException("File already exist: {" +
+                            "fileName:'" + fileName + "', " +
+                            "filePath:'" + filePath + "'}", fileName, filePath);
                 }
-                fileStorage.get(filePath).add(fileData);
             } else {
-                throw new FileAlreadyExistsException("File already exist: {" +
-                        "fileName:'" + fileName + "', " +
-                        "filePath:'" + filePath + "'}", fileName, filePath);
+                fileStorage.put(path, new ArrayList<>());
             }
+            fileStorage.get(path).add(fileData);
         } else {
             try {
                 throw new RuntimeException();
@@ -63,8 +63,8 @@ public class FileNavigator {
      * @return new List<FileData> contains all FileData which have the same file path (or null)
      */
     public List<FileData> find(@NotNull String filePath) {
+        final List<FileData> findFilesList = new ArrayList<>();
         if (!fileStorage.isEmpty()) {
-            final List<FileData> findFilesList = new ArrayList<>();
             for (Map.Entry<String, List<FileData>> entry : fileStorage.entrySet()) {
                 if (entry.getKey().equals(filePath)) {
                     findFilesList.addAll(entry.getValue());
@@ -74,9 +74,8 @@ public class FileNavigator {
                 findFilesList.sort(Comparator.comparing(FileData::getFileName)); // sort by file name
 //                findFilesList.sort(Comparator.comparingInt(FileData::getFileSize)); // sort by file size
             }
-            return findFilesList;
         }
-        return null;
+        return findFilesList;
     }
 
     /**
@@ -84,8 +83,8 @@ public class FileNavigator {
      * @return new List<FileData> filtered by size but not more than maxFileSize parameter (or null)
      */
     public List<FileData> filterBySize(int maxFileSize) {
+        final List<FileData> filteredFilesList = new ArrayList<>();
         if (!fileStorage.isEmpty()) {
-            final List<FileData> filteredFilesList = new ArrayList<>();
             for (List<FileData> fileDataList : fileStorage.values()) {
                 if (!fileDataList.isEmpty()) {
                     for (FileData fd : fileDataList) {
@@ -99,26 +98,23 @@ public class FileNavigator {
 //                filteredFilesList.sort(Comparator.comparing(FileData::getFileName)); // sort by file name
                 filteredFilesList.sort(Comparator.comparingInt(FileData::getFileSize)); // sort by file size
             }
-            return filteredFilesList;
         }
-        return null;
+        return filteredFilesList;
     }
 
     /**
      * @param filePath - parameter for removing FileData
      */
     public void remove(@NotNull String filePath) {
-        if (!fileStorage.isEmpty() && isFilePathAlreadyExist(filePath)) {
-            fileStorage.remove(filePath);
-        }
+        fileStorage.remove(filePath);
     }
 
     /**
      * @return new List<FileData> filtered by size (or null)
      */
     public List<FileData> sortBySize() {
+        final List<FileData> sortedFilesList = new ArrayList<>();
         if (!fileStorage.isEmpty()) {
-            final List<FileData> sortedFilesList = new ArrayList<>();
             for (List<FileData> fileDataList : fileStorage.values()) {
                 if (!fileDataList.isEmpty()) {
                     sortedFilesList.addAll(fileDataList);
@@ -127,35 +123,20 @@ public class FileNavigator {
             if (sortedFilesList.size() > 1) {
                 sortedFilesList.sort(Comparator.comparingInt(FileData::getFileSize));
             }
-            return sortedFilesList;
         }
-        return null;
+        return sortedFilesList;
     }
 
     /**
-     * @param filePath - parameter to check actual file path
-     * @return boolean
+     * @param newFile is a new added file
+     * @return true, if such file name on such file path already exist. Else false.
      */
-    private boolean isFilePathAlreadyExist(@NotNull String filePath) {
-        for (String path : fileStorage.keySet()) {
-            if (path.equals(filePath)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * @param fileData - parameter to check actual file path & file name
-     * @return boolean
-     */
-    private boolean isFileAlreadyExist(@NotNull FileData fileData) {
-        for (Map.Entry<String, List<FileData>> entry : fileStorage.entrySet()) {
-            if (entry.getKey().equals(fileData.getFilePath())) {
-                for (FileData fd : entry.getValue()) {
-                    if (fd.getFileName().equals(fileData.getFileName())) {
-                        return true;
-                    }
+    private boolean isTheSameFileNameExist(@NotNull FileData newFile) {
+        List<FileData> fileList = fileStorage.get(newFile.getFilePath());
+        if (fileList != null) {
+            for (FileData file : fileList) {
+                if (file.getFileName().equals(newFile.getFileName())) {
+                    return true;
                 }
             }
         }
