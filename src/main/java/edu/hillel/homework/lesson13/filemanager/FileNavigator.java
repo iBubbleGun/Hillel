@@ -38,23 +38,20 @@ public class FileNavigator {
         if (path.equals(filePath)) {
             if (fileStorage.containsKey(path)) {
                 if (isTheSameFileNameExist(fileData)) {
-                    throw new FileAlreadyExistsException("File already exist: {" +
+                    throw new RuntimeException("Failed to add new file.", new FileAlreadyExistsException("File already exist: {" +
                             "fileName:'" + fileName + "', " +
-                            "filePath:'" + filePath + "'}", fileName, filePath);
+                            "filePath:'" + filePath + "'}", fileName, filePath));
                 }
             } else {
                 fileStorage.put(path, new ArrayList<>());
             }
             fileStorage.get(path).add(fileData);
         } else {
-            try {
-                throw new RuntimeException();
-            } catch (Exception e) {
-                throw new InvalidFilePathException("There was a mismatch in the file adding paths: " + "{" +
-                        "addingPath=\"" + path + "\", " +
-                        "fileName=\"" + fileName + "\", " +
-                        "filePath=\"" + filePath + "\"}", e, false, true);
-            }
+            throw new RuntimeException("Failed to add new file.", new InvalidFilePathException("\nThere was a mismatch in the file adding paths: " + "{" +
+                    "addingPath=\"" + path + "\", " +
+                    "fileName=\"" + fileName + "\", " +
+                    "fileSize=\"" + fileData.getFileSize() + " bytes\", " +
+                    "filePath=\"" + filePath + "\"}"));
         }
     }
 
