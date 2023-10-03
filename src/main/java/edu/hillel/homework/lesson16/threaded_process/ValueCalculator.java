@@ -21,19 +21,16 @@ public class ValueCalculator {
     }
 
     public void refillArrayThreadedMethod() {
-        final int a1ArraySize = firstHalfValueArraySize;
-        final int a2ArraySize = secondHalfValueArraySize;
-
-        float[] a1 = new float[a1ArraySize];
-        float[] a2 = new float[a2ArraySize];
+        float[] a1 = new float[firstHalfValueArraySize];
+        float[] a2 = new float[secondHalfValueArraySize];
 
         System.out.println("\nUse refillArrayThreadedMethod()... Wait... ");
         long start = System.currentTimeMillis(); // start operating time value (ms)
 
         Arrays.fill(valueArray, NUMBER);
 
-        System.arraycopy(valueArray, 0, a1, 0, a1ArraySize);
-        System.arraycopy(valueArray, a1ArraySize, a2, 0, a2ArraySize);
+        System.arraycopy(valueArray, 0, a1, 0, firstHalfValueArraySize);
+        System.arraycopy(valueArray, firstHalfValueArraySize, a2, 0, secondHalfValueArraySize);
 
         Thread thread1 = new Thread(() -> recalculateArrayElementValues(a1), "Thread 1");
         Thread thread2 = new Thread(() -> recalculateArrayElementValues(a2), "Thread 2");
