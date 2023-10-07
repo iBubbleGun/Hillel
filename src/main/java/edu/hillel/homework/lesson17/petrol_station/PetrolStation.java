@@ -4,19 +4,16 @@ import com.google.common.util.concurrent.AtomicDouble;
 import edu.hillel.homework.lesson17.petrol_station.car.Car;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Random;
 import java.util.concurrent.*;
 
 public class PetrolStation {
 
     private static final int MAXIMUM_THREADS_ALLOWED = 3;
-    private final Random rnd;
     private final AtomicDouble amount;
     private final ExecutorService executor;
     private final CountDownLatch latch;
 
     public PetrolStation(double initialFuelAmount, int totalCarsForRefuel) {
-        this.rnd = new Random();
         this.amount = new AtomicDouble(initialFuelAmount);
         ThreadFactory threadFactory = new ThreadFactory() {
             private int pumpNumber = 1;
@@ -73,6 +70,6 @@ public class PetrolStation {
     private int getLattency() {
         int min = 3;
         int max = 10;
-        return rnd.nextInt(max - min + 1) + min;
+        return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
 }

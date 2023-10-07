@@ -7,7 +7,7 @@ import edu.hillel.homework.lesson17.ball_factory.storage.Tennis;
 import edu.hillel.homework.lesson17.petrol_station.PetrolStation;
 import edu.hillel.homework.lesson17.petrol_station.car.Car;
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
 public class Main {
@@ -121,6 +121,6 @@ public class Main {
     private static int getRandomFuelAmount() {
         final int minFuelAmount = 10;
         final int maxFuelAmount = 45;
-        return new Random().nextInt(maxFuelAmount - minFuelAmount + 1) + minFuelAmount;
+        return ThreadLocalRandom.current().nextInt(minFuelAmount, maxFuelAmount + 1);
     }
 }
