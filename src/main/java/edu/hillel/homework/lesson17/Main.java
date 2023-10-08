@@ -103,7 +103,7 @@ public class Main {
         ///////////////////////////////////////////////// PART 2 /////////////////////////////////////////////////
         System.out.println("\n=== Petrol station ===");
         final int totalCarsForRefuel = 30;
-        PetrolStation petrolStation = new PetrolStation(600);
+        PetrolStation petrolStation = new PetrolStation(600.0);
 
         IntStream.range(0, totalCarsForRefuel).forEach(i -> petrolStation.doRefuel(new Car(), getRandomFuelAmount()));
 

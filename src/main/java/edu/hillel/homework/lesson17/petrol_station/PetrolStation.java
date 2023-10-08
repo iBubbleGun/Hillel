@@ -33,19 +33,21 @@ public class PetrolStation {
         return amount.get();
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(double newAmount) {
+        this.amount.lazySet(newAmount);
+    }
+
+    public void addAmount(double amount) {
         this.amount.addAndGet(amount);
     }
 
     public void doRefuel(Car car, double fuelAmount) {
         executor.execute(() -> {
-            double newAmount = amount.get() - fuelAmount;
-            if (newAmount >= 0) {
-                amount.set(newAmount);
+            if (amount.updateAndGet(currentAmount -> currentAmount - fuelAmount) >= 0.0) {
                 System.out.println(
                         "Refueled " + fuelAmount + " liters petrol for \"" +
                                 car.getCarBrand() + "\" government number \"" + car.getCarNumber() +
-                                "\" (is working gas pump number " + Thread.currentThread().getName() + ")."
+                                "\" (working gas pump #" + Thread.currentThread().getName() + ")."
                 );
                 try {
                     Thread.sleep(getLattency() * 1_000); // simulate a delay in refueling time
@@ -57,9 +59,10 @@ public class PetrolStation {
                         " finished refueling \"" + car.getCarBrand() + "\" " +
                         "government number \"" + car.getCarNumber() + "\" (!)");*/
             } else {
+                addAmount(fuelAmount);
                 System.out.println("Refueling no longer possible for \"" + car.getCarBrand() + "\" " +
                         "government number \"" + car.getCarNumber() + "\". " +
-                        "Current fuel balance (" + amount.get() + " liters) less than " + fuelAmount + " liters!");
+                        "Current fuel balance (" + getAmount() + " liters) less than " + fuelAmount + " liters!");
             }
         });
     }
