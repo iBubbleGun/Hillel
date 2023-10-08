@@ -6,11 +6,11 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class BallManager {
+public class ThreadSafeList {
 
     private final CopyOnWriteArrayList<Ball> ballsList;
 
-    public BallManager() {
+    public ThreadSafeList() {
         this.ballsList = new CopyOnWriteArrayList<>();
     }
 

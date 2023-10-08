@@ -4,16 +4,19 @@ import com.google.common.util.concurrent.AtomicDouble;
 import edu.hillel.homework.lesson17.petrol_station.car.Car;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 public class PetrolStation {
 
     private static final int MAXIMUM_THREADS_ALLOWED = 3;
     private final AtomicDouble amount;
     private final ExecutorService executor;
-    private final CountDownLatch latch;
 
-    public PetrolStation(double initialFuelAmount, int totalCarsForRefuel) {
+    public PetrolStation(double initialFuelAmount) {
         this.amount = new AtomicDouble(initialFuelAmount);
         ThreadFactory threadFactory = new ThreadFactory() {
             private int pumpNumber = 1;
@@ -24,7 +27,6 @@ public class PetrolStation {
             }
         };
         this.executor = Executors.newFixedThreadPool(MAXIMUM_THREADS_ALLOWED, threadFactory);
-        this.latch = new CountDownLatch(totalCarsForRefuel);
     }
 
     public double getAmount() {
@@ -46,28 +48,35 @@ public class PetrolStation {
                                 "\" (is working gas pump number " + Thread.currentThread().getName() + ")."
                 );
                 try {
-                    Thread.sleep((long) getLattency() * 1_000); // simulate a delay in refueling time
+                    Thread.sleep(getLattency() * 1_000); // simulate a delay in refueling time
                 } catch (InterruptedException e) {
                     //e.printStackTrace();
                 }
+                /*System.out.println("(!) Debug: " +
+                        "Gas pump #" + Thread.currentThread().getName() +
+                        " finished refueling \"" + car.getCarBrand() + "\" " +
+                        "government number \"" + car.getCarNumber() + "\" (!)");*/
             } else {
                 System.out.println("Refueling no longer possible for \"" + car.getCarBrand() + "\" " +
                         "government number \"" + car.getCarNumber() + "\". " +
                         "Current fuel balance (" + amount.get() + " liters) less than " + fuelAmount + " liters!");
             }
-            latch.countDown();
         });
     }
 
     public void shutdownExecutor() {
         executor.shutdown();
+        try {
+            if (executor.awaitTermination(Integer.MAX_VALUE, TimeUnit.SECONDS)) {
+                System.out.println("Done!\n------\n" +
+                        "Current fuel balance at the station: " + amount.get() + " liters.");
+            }
+        } catch (InterruptedException e) {
+            //e.printStackTrace();
+        }
     }
 
-    public void awaitCompletion() throws InterruptedException {
-        latch.await();
-    }
-
-    private int getLattency() {
+    private long getLattency() {
         int min = 3;
         int max = 10;
         return ThreadLocalRandom.current().nextInt(min, max + 1);
