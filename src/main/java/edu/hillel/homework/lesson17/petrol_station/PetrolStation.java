@@ -34,7 +34,7 @@ public class PetrolStation {
     }
 
     public void setAmount(double newAmount) {
-        this.amount.lazySet(newAmount);
+        this.amount.set(newAmount);
     }
 
     public void addAmount(double amount) {
