@@ -35,7 +35,5 @@ build/
 
 ### Mac OS ###
 .DS_Store
-
-### additional ###
-/Test.txt
 /double.txt
+/Test.txt
