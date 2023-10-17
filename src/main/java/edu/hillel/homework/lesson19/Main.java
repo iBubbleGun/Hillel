@@ -2,11 +2,9 @@ package edu.hillel.homework.lesson19;
 
 import edu.hillel.homework.lesson19.logger.FileLogger;
 import edu.hillel.homework.lesson19.logger.FileLoggerConfigurationLoader;
+import edu.hillel.homework.lesson19.logger.default_config.DefaultConfigFile;
 import edu.hillel.homework.lesson19.logger.exceptions.FileMaxSizeReachedException;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 
 public class Main {
@@ -15,7 +13,7 @@ public class Main {
     public static FileLogger LOGGER; // public static method for unambiguity and visibility throughout the project
 
     static {
-        createDefaultConfigFile();
+        DefaultConfigFile.generate(LOGGER_CONFIG_FILE_NAME);
         try {
             LOGGER = new FileLogger(FileLoggerConfigurationLoader.load(LOGGER_CONFIG_FILE_NAME));
         } catch (IOException e) {
@@ -33,30 +31,6 @@ public class Main {
             try {
                 Thread.sleep(200); // delay simulation for clearer time logging
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    private static void createDefaultConfigFile() {
-        File defaultConfigFile = new File(LOGGER_CONFIG_FILE_NAME);
-        if (!defaultConfigFile.exists()) {
-            try {
-                if (defaultConfigFile.createNewFile()) {
-                    try (BufferedWriter bw = new BufferedWriter(new FileWriter(defaultConfigFile, true))) {
-                        bw.write("File=D:\\Log_[DATE]_[TIME].log"); // your log file path
-                        bw.newLine();
-                        bw.write("Level=DEBUG");
-                        bw.newLine();
-                        bw.write("Max-size=2048");
-                        bw.newLine();
-                        bw.write("Format=[TIMESTAMP] [LEVEL] Message: [MESSAGE]");
-                        bw.newLine();
-                    } catch (IOException err) {
-                        throw new RuntimeException(err);
-                    }
-                }
-            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
