@@ -8,7 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class DatabaseLoggerConfigLoader implements LoggerConfigLoaderInterface {
+public class DatabaseLoggerConfigLoader extends LoggerConfigLoader implements LoggerConfigLoaderInterface {
 
     private final String configFilePath;
 
@@ -25,7 +25,7 @@ public class DatabaseLoggerConfigLoader implements LoggerConfigLoaderInterface {
 
             String line;
             while ((line = r.readLine()) != null) {
-                if (line.contains("##")) {
+                if (super.isComment(line)) {
                     continue;
                 }
                 String[] parts = line.split("=");
@@ -37,15 +37,9 @@ public class DatabaseLoggerConfigLoader implements LoggerConfigLoaderInterface {
                 String value = parts[1].trim();
 
                 switch (key) {
-                    case "DATABASE-LOGGING-ENABLED" -> {
-                        try {
-                            databaseLoggingEnable = Boolean.parseBoolean(value);
-                        } catch (Exception e) {
-                            throw new RuntimeException("Invalid configuration file format.", e);
-                        }
-                    }
-                    case "LOG-LEVEL" -> logLevel = LogLevel.valueOf(value);
-                    case "FORMAT" -> format = value;
+                    case "DATABASE-LOGGING-ENABLED" -> databaseLoggingEnable = super.parseBooleanValue(value);
+                    case "LOG-LEVEL" -> logLevel = super.parseLogLevelValue(value);
+                    case "FORMAT" -> format = super.parseStringValue(value);
                     default -> throw new RuntimeException("Invalid configuration file format.");
                 }
             }

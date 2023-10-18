@@ -8,7 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class FileLoggerConfigLoader implements LoggerConfigLoaderInterface {
+public class FileLoggerConfigLoader extends LoggerConfigLoader implements LoggerConfigLoaderInterface {
 
     private final String configFilePath;
 
@@ -27,7 +27,7 @@ public class FileLoggerConfigLoader implements LoggerConfigLoaderInterface {
 
             String line;
             while ((line = r.readLine()) != null) {
-                if (line.contains("##")) {
+                if (super.isComment(line)) {
                     continue;
                 }
                 String[] parts = line.split("=");
@@ -39,17 +39,11 @@ public class FileLoggerConfigLoader implements LoggerConfigLoaderInterface {
                 String value = parts[1].trim();
 
                 switch (key) {
-                    case "FILE-LOGGING-ENABLED" -> {
-                        try {
-                            fileLoggingEnable = Boolean.parseBoolean(value);
-                        } catch (Exception e) {
-                            throw new RuntimeException("Invalid configuration file format.", e);
-                        }
-                    }
-                    case "FILE" -> filePath = value;
-                    case "MAX-FILE-SIZE" -> maxFileSize = Long.parseLong(value);
-                    case "LOG-LEVEL" -> logLevel = LogLevel.valueOf(value);
-                    case "FORMAT" -> format = value;
+                    case "FILE-LOGGING-ENABLED" -> fileLoggingEnable = super.parseBooleanValue(value);
+                    case "FILE" -> filePath = super.parseStringValue(value);
+                    case "MAX-FILE-SIZE" -> maxFileSize = super.parseLongValue(value);
+                    case "LOG-LEVEL" -> logLevel = super.parseLogLevelValue(value);
+                    case "FORMAT" -> format = super.parseStringValue(value);
                     default -> throw new RuntimeException("Invalid configuration file format.");
                 }
             }
