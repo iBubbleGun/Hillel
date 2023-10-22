@@ -13,8 +13,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        try (DataBaseConnection dataBaseConnection = new DataBaseConnection();
-             Connection connection = dataBaseConnection.getConnection()) {
+        try (DataBaseConnection dataBaseConnection = new DataBaseConnection()) {
+            Connection connection = dataBaseConnection.getConnection();
 
             HomeworkDao homeworkDao = new HomeworkDao(connection);
             LessonDao lessonDao = new LessonDao(connection);
