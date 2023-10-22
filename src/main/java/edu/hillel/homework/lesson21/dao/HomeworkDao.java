@@ -12,11 +12,16 @@ import java.util.List;
 
 public class HomeworkDao {
 
-    public void addHomework(@NotNull Homework homework) {
-        try (Connection connection = DataBaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(
-                     "INSERT INTO homework (name, description) VALUES (?, ?)",
-                     PreparedStatement.RETURN_GENERATED_KEYS)) {
+    private final Connection connection;
+
+    public HomeworkDao(Connection connection) {
+        this.connection = connection;
+    }
+
+    public void addHomework(@NotNull Homework homework) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
+                "INSERT INTO homework (name, description) VALUES (?, ?)",
+                PreparedStatement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, homework.getName());
             preparedStatement.setString(2, homework.getDescription());
             preparedStatement.executeUpdate();
@@ -28,29 +33,21 @@ public class HomeworkDao {
                     throw new SQLException("Failed to return the homework id.");
                 }
             }
-        } catch (SQLException e) {
-            //e.printStackTrace();
-            throw new RuntimeException(e);
         }
     }
 
-    public void deleteHomework(int homeworkId) {
-        try (Connection connection = DataBaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(
-                     "DELETE FROM homework WHERE id = ?")) {
+    public void deleteHomework(int homeworkId) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
+                "DELETE FROM homework WHERE id = ?")) {
             preparedStatement.setInt(1, homeworkId);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            //e.printStackTrace();
-            throw new RuntimeException(e);
         }
     }
 
-    public List<Homework> getAllHomeworks() {
+    public List<Homework> getAllHomeworks() throws SQLException {
         final List<Homework> homeworks = new ArrayList<>();
-        try (Connection connection = DataBaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(
-                     "SELECT * FROM homework")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
+                "SELECT * FROM homework")) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 final Homework homework = new Homework(
@@ -60,18 +57,14 @@ public class HomeworkDao {
                 );
                 homeworks.add(homework);
             }
-        } catch (SQLException e) {
-            //e.printStackTrace();
-            throw new RuntimeException(e);
         }
         return homeworks;
     }
 
-    public Homework getHomeworkById(int homeworkId) {
+    public Homework getHomeworkById(int homeworkId) throws SQLException {
         Homework homework = null;
-        try (Connection connection = DataBaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(
-                     "SELECT * FROM homework WHERE id = ?")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
+                "SELECT * FROM homework WHERE id = ?")) {
             preparedStatement.setInt(1, homeworkId);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -81,9 +74,6 @@ public class HomeworkDao {
                         resultSet.getString("description")
                 );
             }
-        } catch (SQLException e) {
-            //e.printStackTrace();
-            throw new RuntimeException(e);
         }
         return homework;
     }
