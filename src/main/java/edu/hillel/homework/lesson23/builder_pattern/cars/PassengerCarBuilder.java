@@ -4,32 +4,37 @@ import edu.hillel.homework.lesson23.builder_pattern.CarBuilder;
 
 public class PassengerCarBuilder extends CarBuilder {
 
+    private static final String BODY_TYPE = "Sedan";
+    private static final String ENGINE = "V4 normal";
+    private static final int WHEELS = 4;
+    private static final int SEATS = 4;
+
     public PassengerCarBuilder(String color) {
         super(color);
     }
 
     @Override
     public void buildBodyType() {
-        car.setBodyType("Sedan");
+        car.setBodyType(BODY_TYPE);
     }
 
     @Override
     public void buildEngine() {
-        car.setEngine("V4 normal");
+        car.setEngine(ENGINE);
     }
 
     @Override
     public void buildWheels() {
-        car.setWheels(4);
+        car.setWheels(WHEELS);
     }
 
     @Override
     public void buildSeatsNumber() {
-        car.setSeatsNumber(4);
+        car.setSeatsNumber(SEATS);
     }
 
     @Override
     public void buildColor() {
-        car.setSetColor(super.getColor());
+        car.setSetColor(getColor());
     }
 }
