@@ -36,7 +36,7 @@ public class FileDataProcessor implements DataProcessor {
             } catch (IOException err) {
                 throw new RuntimeException(
                         "An error occurred while creating parent directories: "
-                                .concat(parentDirectory.toString()));
+                                .concat(parentDirectory.toString()), err);
             }
         }
         try {
