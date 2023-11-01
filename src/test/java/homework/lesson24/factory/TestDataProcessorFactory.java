@@ -8,6 +8,7 @@ import edu.hillel.homework.lesson24.processor.impl.MapDataProcessor;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class TestDataProcessorFactory {
@@ -21,16 +22,19 @@ public class TestDataProcessorFactory {
 
     @Test
     public void testCreateMapDataProcessor() {
+        assertNotNull(factory.createDataProcessor(DataProcessorType.MAP));
         assertTrue(factory.createDataProcessor(DataProcessorType.MAP) instanceof MapDataProcessor);
     }
 
     @Test
     public void testCreateFileDataProcessor() {
+        assertNotNull(factory.createDataProcessor(DataProcessorType.FILE));
         assertTrue(factory.createDataProcessor(DataProcessorType.FILE) instanceof FileDataProcessor);
     }
 
     @Test
     public void testCreateDatabaseDataProcessor() {
+        assertNotNull(factory.createDataProcessor(DataProcessorType.DATABASE));
         assertTrue(factory.createDataProcessor(DataProcessorType.DATABASE) instanceof DatabaseDataProcessor);
     }
 
