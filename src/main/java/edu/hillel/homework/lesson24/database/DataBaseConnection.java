@@ -6,10 +6,10 @@ import java.sql.SQLException;
 
 public class DataBaseConnection implements AutoCloseable {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/hillel";
-    private static final String USERNAME = "hillel";
-    private static final String PASSWORD = "hillel";
-    private final Connection connection;
+    private final String url;
+    private final String username;
+    private final String password;
+    private Connection connection;
 
     static {
         try {
@@ -19,11 +19,20 @@ public class DataBaseConnection implements AutoCloseable {
         }
     }
 
-    public DataBaseConnection() throws SQLException {
-        this.connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+    public DataBaseConnection() {
+        this.url = "jdbc:mysql://localhost:3306/hillel";
+        this.username = "hillel";
+        this.password = "hillel";
     }
 
-    public Connection getConnection() {
+    public DataBaseConnection(String url, String username, String password) {
+        this.url = url;
+        this.username = username;
+        this.password = password;
+    }
+
+    public Connection getConnection() throws SQLException {
+        this.connection = DriverManager.getConnection(url, username, password);
         return connection;
     }
 
