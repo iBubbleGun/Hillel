@@ -22,7 +22,7 @@ public class TestFileSender {
     }
 
     @Test
-    public void testSave() {
+    public void testSend() {
         File file = new File("test.txt");
         fileSenderMock.send(file, socketMock);
         verify(fileSenderMock).send(file, socketMock);

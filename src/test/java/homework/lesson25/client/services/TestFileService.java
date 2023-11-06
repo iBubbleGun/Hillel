@@ -21,7 +21,7 @@ public class TestFileService {
     }
 
     @Test
-    public void testProcessData() {
+    public void testSend() {
         FileService mock = mock(FileService.class);
         File file = new File("test\\file\\path\\testFile.name");
         mock.send(file, socketMock);
