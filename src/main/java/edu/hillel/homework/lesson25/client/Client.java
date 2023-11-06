@@ -47,6 +47,8 @@ public class Client {
                     Available server commands:
                     -file path\\to\\your\\file.name - to upload your file in to the server.
                     -exit - to disconnect from the server.
+                    -date - print local server date.
+                    -time - print local server time.
                     Type your command:""");
 
             String userInput;
