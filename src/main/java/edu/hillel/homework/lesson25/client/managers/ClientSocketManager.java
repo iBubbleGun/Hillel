@@ -21,7 +21,7 @@ public class ClientSocketManager implements AutoCloseable {
 
     @Override
     public void close() throws Exception {
-        if (socket != null) {
+        if (socket != null && !socket.isClosed()) {
             socket.close();
         }
     }

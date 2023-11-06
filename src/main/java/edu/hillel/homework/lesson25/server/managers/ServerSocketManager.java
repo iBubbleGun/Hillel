@@ -21,7 +21,7 @@ public class ServerSocketManager implements AutoCloseable {
 
     @Override
     public void close() throws Exception {
-        if (serverSocket != null) {
+        if (serverSocket != null && !serverSocket.isClosed()) {
             serverSocket.close();
         }
     }
