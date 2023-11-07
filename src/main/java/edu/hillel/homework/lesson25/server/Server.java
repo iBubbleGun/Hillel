@@ -10,12 +10,12 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Server {
 
-    private final List<User> clients = new ArrayList<>();
+    private final List<User> clients = new CopyOnWriteArrayList<>();
     private final UserNameGenerator userNameGenerator = new UserNameGenerator(1_000_000);
     private final ServerSocketManager socketManager;
 
@@ -32,11 +32,9 @@ public class Server {
                 Socket clientSocket = server.accept();
 
                 User user = new User(userNameGenerator, clientSocket);
+                clients.add(user);
                 System.out.println("[INFO] [" + user.getConnectedTime() + "] \"" + user.getName() + "\" connected.");
 
-                synchronized (clients) {
-                    clients.add(user);
-                }
                 new Thread(new ClientHandler(user, this), user.getName()).start();
             }
         } catch (IOException e) {
@@ -45,19 +43,15 @@ public class Server {
     }
 
     public void broadcastMessage(String message, User user) {
-        synchronized (clients) {
-            clients.stream()
-                    .filter(client -> !client.equals(user))
-                    .forEach(client -> client.getClientWriter().println(message));
-        }
+        clients.stream()
+                .filter(client -> !client.equals(user))
+                .forEach(client -> client.getClientWriter().println(message));
     }
 
     public void removeClient(@NotNull User user) {
         final String message = "[" + new Timestamp(System.currentTimeMillis()) + "] \"" +
                 user.getName() + "\" has been disconnected.";
-        synchronized (clients) {
-            clients.remove(user);
-        }
+        clients.remove(user);
         System.out.println(message);
         broadcastMessage(message, user);
     }
