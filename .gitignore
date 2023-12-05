@@ -37,3 +37,4 @@ build/
 .DS_Store
 /double.txt
 /Test.txt
+/logs/
