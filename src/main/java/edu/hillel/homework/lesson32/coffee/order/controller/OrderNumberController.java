@@ -21,6 +21,7 @@ public class OrderNumberController {
     public int getTotalOrdersCounterValue() {
         LOG.trace("Call getTotalOrdersCounterValue() method. " +
                 "Current totalOrdersCounterValue=" + totalOrdersCounterValue);
+        LOG.debug("getTotalOrdersCounterValue() method returned totalOrdersCounterValue=" + totalOrdersCounterValue);
         return totalOrdersCounterValue;
     }
 
