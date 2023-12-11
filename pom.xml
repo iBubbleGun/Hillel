@@ -16,7 +16,7 @@
 
         <!-- Dependencies -->
         <mysql.version>8.2.0</mysql.version>
-        <annotations.version>24.0.1</annotations.version>
+        <annotations.version>24.1.0</annotations.version>
         <guava.version>32.1.3-jre</guava.version>
         <junit.version>4.13.2</junit.version>
         <mockito-core.version>5.6.0</mockito-core.version>
