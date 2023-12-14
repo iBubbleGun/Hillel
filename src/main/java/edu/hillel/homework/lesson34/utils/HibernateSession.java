@@ -4,7 +4,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
-public class HibernateSession {
+public class HibernateSession implements AutoCloseable {
 
     private static SessionFactory sessionFactory;
 
@@ -24,5 +24,10 @@ public class HibernateSession {
             }
         }
         return sessionFactory;
+    }
+
+    @Override
+    public void close() throws Exception {
+        sessionFactory.close();
     }
 }
